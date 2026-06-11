@@ -118,6 +118,23 @@
   .trend-up { color: #66bb6a; direction: ltr; }
   .trend-down { color: #ef5350; direction: ltr; }
 
+  .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  .video-cap { color: var(--muted); font-size: 12px; margin-top: 10px; }
+
   .method-card {
     background: var(--panel);
     border: 1px solid var(--line);
@@ -401,6 +418,19 @@
 
 <section>
   <div class="container">
+    <h2><span data-i18n="archTitle"></span> <small data-i18n="archSmall"></small></h2>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/zgHr49kMtQk" loading="lazy"
+        title="Jame interview after winning IEM Rio Major 2022"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="video-cap" data-i18n="archCap"></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
     <h2 data-i18n="methTitle"></h2>
     <div class="method-card">
       <h3 data-i18n="m1t"></h3>
@@ -500,6 +530,9 @@ const I18N = {
     n9: "Then-record reading, driven by substantial vertical extension below the mandibular line.",
     n10: "Final event of the Virtus.pro chapter, measured amid roster uncertainty. Coverage dipped but held A-grade.",
     n11: "New-team rebound. Record TBA of 272.5 cm² — up 27% YoY from Austin 2025, the largest June-to-June gain in the dataset.",
+    archTitle: "Archival Footage",
+    archSmall: "Subject observation window: IEM Rio 2022 · S-grade (71.5%)",
+    archCap: "Post-championship interview, recorded within the certified \"Golden Ratio Beard\" observation window. Footage embedded from YouTube for reference; measurement frames were sampled independently.",
     methTitle: "Methodology",
     m1t: "📐 Index Definitions",
     m1b: "<strong>BCR (Beard Coverage Ratio)</strong> is the beard-covered share of the lower facial region, bounded by the infraorbital margin above and the mandibular line below. <strong>TBA (Total Beard Area)</strong> additionally includes growth extending beyond the mandibular line, which is why TBA can grow faster than BCR — as observed in the +27% YoY reading at Cologne 2026.",
@@ -541,6 +574,9 @@ const I18N = {
     n9: "Mesure record à l'époque, portée par une extension verticale substantielle sous la ligne mandibulaire.",
     n10: "Dernier événement du chapitre Virtus.pro, mesuré dans un contexte d'incertitude d'effectif. Couverture en baisse mais grade A conservé.",
     n11: "Rebond avec la nouvelle équipe. TBA record de 272,5 cm² — +27 % sur un an depuis Austin 2025, plus forte progression juin-à-juin du jeu de données.",
+    archTitle: "Images d'archives",
+    archSmall: "Fenêtre d'observation du sujet : IEM Rio 2022 · grade S (71,5 %)",
+    archCap: "Interview d'après-titre, enregistrée dans la fenêtre d'observation certifiée « barbe au nombre d'or ». Vidéo intégrée depuis YouTube à titre de référence ; les images de mesure ont été échantillonnées indépendamment.",
     methTitle: "Méthodologie",
     m1t: "📐 Définitions des indices",
     m1b: "Le <strong>BCR (taux de couverture de barbe)</strong> est la part couverte de barbe de la région faciale inférieure, délimitée par le bord infra-orbitaire en haut et la ligne mandibulaire en bas. La <strong>TBA (surface totale de barbe)</strong> inclut en outre la pousse au-delà de la ligne mandibulaire, ce qui explique qu'elle puisse croître plus vite que le BCR — comme observé avec la mesure de +27 % sur un an à Cologne 2026.",
@@ -582,6 +618,9 @@ const I18N = {
     n9: "当時の最高記録。下顎ラインより下への大幅な垂直伸長が主因。",
     n10: "Virtus.pro時代最後の大会。ロスター不安の中での計測となり、被覆率は微減もA等級は維持。",
     n11: "新チームでのV字回復。TBAは記録的な272.5cm² — Austin 2025比で前年比+27%、データセット中最大の6月対6月成長。",
+    archTitle: "アーカイブ映像",
+    archSmall: "被験者観測ウィンドウ：IEM Rio 2022・S等級（71.5%）",
+    archCap: "優勝直後インタビュー。「黄金比髭」認定観測ウィンドウ内の収録。参考用にYouTubeから埋め込み。計測フレームは独立にサンプリングした。",
     methTitle: "計測手法",
     m1t: "📐 指標の定義",
     m1b: "<strong>BCR（髭被覆率）</strong>は、上を眼窩下縁、下を下顎ラインで区切った顔面下半部のうち、髭に覆われている割合。<strong>TBA（髭総面積）</strong>は下顎ラインを越えて伸びる部分も含むため、BCRより速く成長しうる — Cologne 2026の前年比+27%はその実例である。",
@@ -623,6 +662,9 @@ const I18N = {
     n9: "당시 기록 경신. 하악선 아래로의 대폭적인 수직 확장이 주 요인.",
     n10: "Virtus.pro 시절 마지막 대회. 로스터 불확실성 속 측정으로 피복률은 하락했으나 A등급 유지.",
     n11: "새 팀에서의 반등. TBA 272.5cm² 신기록 — Austin 2025 대비 전년비 +27%, 데이터셋 최대의 6월 대 6월 증가폭.",
+    archTitle: "아카이브 영상",
+    archSmall: "피험자 관측 윈도우: IEM Rio 2022 · S등급(71.5%)",
+    archCap: "우승 직후 인터뷰. '황금비 수염' 인증 관측 윈도우 내 녹화. 참고용으로 YouTube에서 임베드했으며 측정 프레임은 독립적으로 샘플링했다.",
     methTitle: "측정 방법론",
     m1t: "📐 지표 정의",
     m1b: "<strong>BCR(수염 피복률)</strong>은 위로는 안와하연, 아래로는 하악선으로 경계 지은 하부 안면 영역에서 수염이 덮은 비율이다. <strong>TBA(수염 총면적)</strong>는 하악선 아래로 뻗은 부분까지 포함하므로 BCR보다 빠르게 성장할 수 있다 — Cologne 2026의 전년비 +27%가 그 예다.",
@@ -664,6 +706,9 @@ const I18N = {
     n9: "قراءة قياسية آنذاك، مدفوعة بامتداد عمودي كبير تحت خط الفك السفلي.",
     n10: "آخر حدث في مرحلة فيرتوس برو، قيس وسط غموض التشكيلة. انخفضت التغطية لكنها حافظت على الدرجة A.",
     n11: "انتعاش مع الفريق الجديد. رقم قياسي لإجمالي مساحة اللحية بلغ 272.5 سم² — بزيادة 27٪ على أساس سنوي عن أوستن 2025، أكبر زيادة من يونيو إلى يونيو في مجموعة البيانات.",
+    archTitle: "لقطات أرشيفية",
+    archSmall: "نافذة رصد الموضوع: IEM ريو 2022 · الدرجة S (71.5٪)",
+    archCap: "مقابلة ما بعد التتويج، سُجلت ضمن نافذة الرصد المعتمدة لـ«لحية النسبة الذهبية». الفيديو مضمّن من يوتيوب للمرجعية؛ وأُخذت إطارات القياس بشكل مستقل.",
     methTitle: "المنهجية",
     m1t: "📐 تعريفات المؤشرات",
     m1b: "<strong>BCR (نسبة تغطية اللحية)</strong> هي حصة اللحية من المنطقة السفلية للوجه، المحدودة بالحافة تحت الحجاجية أعلى وخط الفك السفلي أسفل. أما <strong>TBA (إجمالي مساحة اللحية)</strong> فيشمل أيضًا النمو الممتد تحت خط الفك، ولهذا قد ينمو أسرع من BCR — كما لوحظ في قراءة +27٪ السنوية في كولونيا 2026.",
