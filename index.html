@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JBCI — Jame Beard Coverage Index | Major-by-Major Facial Hair Analytics</title>
+<meta name="description" content="Longitudinal facial hair analytics for Counter-Strike AWPer Jame (Dzhami Ali). Beard coverage ratio quantified across all eleven Majors, 2018–2026.">
+<style>
+  :root {
+    --bg: #0e1116;
+    --panel: #161b24;
+    --panel2: #1c2330;
+    --accent: #f5a623;
+    --accent2: #4fc3f7;
+    --text: #e8eaed;
+    --muted: #8a93a3;
+    --win: #ffd700;
+    --line: #2a3344;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.7;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+  header {
+    background: linear-gradient(135deg, #131922 0%, #1d2433 60%, #2a2113 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 48px 0 36px;
+    text-align: center;
+  }
+  .org-name { color: var(--muted); font-size: 13px; letter-spacing: 2px; }
+  h1 { font-size: 34px; margin: 8px 0 4px; }
+  h1 .en { color: var(--accent); }
+  .tagline { color: var(--muted); font-size: 15px; }
+  .yoy-badge {
+    display: inline-block;
+    margin-top: 14px;
+    background: #15301c;
+    color: #66bb6a;
+    border: 1px solid #66bb6a;
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  section { padding: 40px 0; }
+  h2 {
+    font-size: 22px;
+    border-left: 5px solid var(--accent);
+    padding-left: 12px;
+    margin-bottom: 20px;
+  }
+  h2 small { color: var(--muted); font-size: 13px; font-weight: normal; margin-left: 10px; }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: -26px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .num { font-size: 34px; font-weight: bold; color: var(--accent); }
+  .stat-card .num.green { color: #66bb6a; }
+  .stat-card .label { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  .chart-wrap {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    overflow-x: auto;
+  }
+  .chart-note { color: var(--muted); font-size: 12px; margin-top: 10px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+  th { background: var(--panel2); color: var(--accent2); font-size: 13px; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-variant-numeric: tabular-nums; font-weight: bold; }
+  .champion { background: rgba(255, 215, 0, 0.07); }
+  .champion td:first-child::after { content: " 🏆"; }
+  .trend-up { color: #66bb6a; }
+  .trend-down { color: #ef5350; }
+
+  .method-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .method-card h3 { color: var(--accent2); font-size: 16px; margin-bottom: 8px; }
+  .method-card p { color: var(--text); font-size: 14px; }
+  .formula {
+    background: #0a0d12;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 14px;
+    color: var(--accent);
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+
+  blockquote {
+    background: var(--panel2);
+    border-left: 4px solid var(--accent2);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  footer .fineprint { font-size: 11px; color: #5a6373; margin-top: 6px; }
+  @media (max-width: 600px) {
+    h1 { font-size: 24px; }
+    th, td { padding: 8px 8px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="org-name">BEARD METRICS LAB — ESPORTS FACIAL HAIR ANALYTICS DIVISION</div>
+    <h1>JBCI <span class="en">— Jame Beard Coverage Index</span></h1>
+    <div class="tagline">Quantifying the beard coverage ratio of Counter-Strike's premier AWPer, Major by Major, since 2018</div>
+    <div class="yoy-badge">📈 Total beard area up 27% year-over-year (2025 → 2026)</div>
+  </div>
+</header>
+
+<section>
+  <div class="container hero-stats">
+    <div class="stat-card">
+      <div class="num green">+27%</div>
+      <div class="label">YoY total beard area growth<br>(Austin 2025 → Cologne 2026)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">74.6%</div>
+      <div class="label">All-time peak BCR (Cologne 2026)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">r = 0.87</div>
+      <div class="label">Correlation: BCR × Major placement</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">11</div>
+      <div class="label">Consecutive Majors tracked</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>BCR Trend <small>2018–2026 · All 11 Majors attended</small></h2>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 900 380" width="100%" role="img" aria-label="Beard Coverage Ratio trend chart">
+        <!-- grid -->
+        <g stroke="#2a3344" stroke-width="1">
+          <line x1="70" y1="40"  x2="870" y2="40"/>
+          <line x1="70" y1="110" x2="870" y2="110"/>
+          <line x1="70" y1="180" x2="870" y2="180"/>
+          <line x1="70" y1="250" x2="870" y2="250"/>
+          <line x1="70" y1="320" x2="870" y2="320"/>
+        </g>
+        <g fill="#8a93a3" font-size="12" text-anchor="end">
+          <text x="60" y="44">80%</text>
+          <text x="60" y="114">60%</text>
+          <text x="60" y="184">40%</text>
+          <text x="60" y="254">20%</text>
+          <text x="60" y="324">0%</text>
+        </g>
+        <!-- y = 320 - (pct * 3.5) -->
+        <polyline fill="none" stroke="#f5a623" stroke-width="3"
+          points="110,175.8 184.5,121.2 259,98.1 333.5,109.7 408,69.8 482.5,91.8 557,82.7 631.5,77.5 706,64.9 780.5,80.6 855,58.9"/>
+        <g fill="#f5a623">
+          <circle cx="110" cy="175.8" r="5"/>
+          <circle cx="184.5" cy="121.2" r="5"/>
+          <circle cx="259" cy="98.1" r="5"/>
+          <circle cx="333.5" cy="109.7" r="5"/>
+          <circle cx="408" cy="69.8" r="7" fill="#ffd700"/>
+          <circle cx="482.5" cy="91.8" r="5"/>
+          <circle cx="557" cy="82.7" r="5"/>
+          <circle cx="631.5" cy="77.5" r="5"/>
+          <circle cx="706" cy="64.9" r="5"/>
+          <circle cx="780.5" cy="80.6" r="5"/>
+          <circle cx="855" cy="58.9" r="5"/>
+        </g>
+        <g fill="#e8eaed" font-size="12" text-anchor="middle">
+          <text x="110" y="160">41.2</text>
+          <text x="184.5" y="106">56.8</text>
+          <text x="259" y="83">63.4</text>
+          <text x="333.5" y="130">60.1</text>
+          <text x="408" y="52" fill="#ffd700" font-weight="bold">71.5 🏆</text>
+          <text x="482.5" y="112">65.2</text>
+          <text x="557" y="68">67.8</text>
+          <text x="631.5" y="98">69.3</text>
+          <text x="706" y="50">72.9</text>
+          <text x="780.5" y="101">68.4</text>
+          <text x="855" y="44" font-weight="bold">74.6</text>
+        </g>
+        <g fill="#8a93a3" font-size="11" text-anchor="middle">
+          <text x="110" y="345">London</text><text x="110" y="360">2018</text>
+          <text x="184.5" y="345">Berlin</text><text x="184.5" y="360">2019</text>
+          <text x="259" y="345">Stockholm</text><text x="259" y="360">2021</text>
+          <text x="333.5" y="345">Antwerp</text><text x="333.5" y="360">2022</text>
+          <text x="408" y="345">Rio</text><text x="408" y="360">2022</text>
+          <text x="482.5" y="345">Paris</text><text x="482.5" y="360">2023</text>
+          <text x="557" y="345">Copenhagen</text><text x="557" y="360">2024</text>
+          <text x="631.5" y="345">Shanghai</text><text x="631.5" y="360">2024</text>
+          <text x="706" y="345">Austin</text><text x="706" y="360">2025</text>
+          <text x="780.5" y="345">Budapest</text><text x="780.5" y="360">2025</text>
+          <text x="855" y="345">Cologne</text><text x="855" y="360">2026</text>
+        </g>
+      </svg>
+      <div class="chart-note">Gold marker denotes Major championship. IEM Rio 2022 produced the celebrated 71.5% "Championship Beard" reading — a record that stood until Austin 2025 and was surpassed again at Cologne 2026.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Major-by-Major Dataset <small>BCR = Beard Coverage Ratio · TBA = Total Beard Area</small></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Major</th>
+          <th>Team</th>
+          <th>BCR</th>
+          <th>TBA (cm²)</th>
+          <th>Δ BCR</th>
+          <th>Density Grade</th>
+          <th>Analyst Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>FACEIT London 2018</td>
+          <td>AVANGAR</td>
+          <td class="num">41.2%</td>
+          <td class="num">98.2</td>
+          <td>—</td>
+          <td>C+ (Emerging)</td>
+          <td>Baseline observation. Contour-led configuration, conservative cheek coverage.</td>
+        </tr>
+        <tr>
+          <td>StarLadder Berlin 2019</td>
+          <td>AVANGAR</td>
+          <td class="num">56.8%</td>
+          <td class="num">124.6</td>
+          <td class="trend-up">▲ +15.6</td>
+          <td>B (Developing)</td>
+          <td>Sharpest single-event gain on record, coinciding with the Grand Final run.</td>
+        </tr>
+        <tr>
+          <td>PGL Stockholm 2021</td>
+          <td>Virtus.pro</td>
+          <td class="num">63.4%</td>
+          <td class="num">141.0</td>
+          <td class="trend-up">▲ +6.6</td>
+          <td>B+ (Established)</td>
+          <td>Cheek-region coverage entered a stable supply phase.</td>
+        </tr>
+        <tr>
+          <td>PGL Antwerp 2022</td>
+          <td>Outsiders</td>
+          <td class="num">60.1%</td>
+          <td class="num">133.8</td>
+          <td class="trend-down">▼ -3.3</td>
+          <td>B (Correction)</td>
+          <td>Pre-event trim detected. Both placement and coverage underperformed projections.</td>
+        </tr>
+        <tr class="champion">
+          <td>IEM Rio 2022</td>
+          <td>Outsiders</td>
+          <td class="num">71.5%</td>
+          <td class="num">161.2</td>
+          <td class="trend-up">▲ +11.4</td>
+          <td>S (Championship)</td>
+          <td>Major title secured. Certified "Golden Ratio Beard" — the only S-grade championship pairing in the dataset.</td>
+        </tr>
+        <tr>
+          <td>BLAST.tv Paris 2023</td>
+          <td>Virtus.pro</td>
+          <td class="num">65.2%</td>
+          <td class="num">150.7</td>
+          <td class="trend-down">▼ -6.3</td>
+          <td>A- (Consolidation)</td>
+          <td>Post-championship retracement. Coverage remained well above the career median.</td>
+        </tr>
+        <tr>
+          <td>PGL Copenhagen 2024</td>
+          <td>Virtus.pro</td>
+          <td class="num">67.8%</td>
+          <td class="num">158.9</td>
+          <td class="trend-up">▲ +2.6</td>
+          <td>A (Recovery)</td>
+          <td>First CS2-era Major. Measurement pipeline fully backward-compatible.</td>
+        </tr>
+        <tr>
+          <td>Perfect World Shanghai 2024</td>
+          <td>Virtus.pro</td>
+          <td class="num">69.3%</td>
+          <td class="num">169.0</td>
+          <td class="trend-up">▲ +1.5</td>
+          <td>A (Mature)</td>
+          <td>First recorded full closure of the mustache–chin junction.</td>
+        </tr>
+        <tr>
+          <td>BLAST.tv Austin 2025</td>
+          <td>Virtus.pro</td>
+          <td class="num">72.9%</td>
+          <td class="num">214.6</td>
+          <td class="trend-up">▲ +3.6</td>
+          <td>S (Then-record)</td>
+          <td>Then-record reading, driven by substantial vertical extension below the mandibular line.</td>
+        </tr>
+        <tr>
+          <td>StarLadder Budapest 2025</td>
+          <td>Virtus.pro</td>
+          <td class="num">68.4%</td>
+          <td class="num">201.8</td>
+          <td class="trend-down">▼ -4.5</td>
+          <td>A (Turbulence)</td>
+          <td>Final event of the Virtus.pro chapter, measured amid roster uncertainty. Coverage dipped but held A-grade.</td>
+        </tr>
+        <tr>
+          <td>IEM Cologne 2026</td>
+          <td>PARIVISION</td>
+          <td class="num">74.6%</td>
+          <td class="num">272.5</td>
+          <td class="trend-up">▲ +6.2</td>
+          <td>S (All-time high)</td>
+          <td>New-team rebound. Record TBA of 272.5 cm² — up 27% YoY from Austin 2025, the largest June-to-June gain in the dataset.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Methodology</h2>
+    <div class="method-card">
+      <h3>📐 Index Definitions</h3>
+      <p><strong>BCR (Beard Coverage Ratio)</strong> is the beard-covered share of the lower facial region, bounded by the infraorbital margin above and the mandibular line below. <strong>TBA (Total Beard Area)</strong> additionally includes growth extending beyond the mandibular line, which is why TBA can grow faster than BCR — as observed in the +27% YoY reading at Cologne 2026.</p>
+      <div class="formula">BCR = ( S<sub>beard∩face</sub> ÷ S<sub>lower-face</sub> ) × 100&nbsp;&nbsp;&nbsp;&nbsp;TBA = S<sub>beard</sub> (projected, cm²)</div>
+    </div>
+    <div class="method-card">
+      <h3>📷 Measurement Protocol</h3>
+      <p>For each Major, frontal imagery is sampled from three sources: the official player portrait, stage walk-out footage, and post-match interview footage. Beard regions are extracted with our in-house segmentation pipeline (FHSeg v4) and the three readings are averaged into the event value. Scale calibration uses the known interpupillary distance to convert pixel area to cm².</p>
+    </div>
+    <div class="method-card">
+      <h3>🧪 Density Grading</h3>
+      <p>S: ≥70% (Elite) · A: ≥65% (Mature) · B: ≥55% (Established) · C: &lt;55% (Emerging). The "Championship Beard" designation requires an S-grade reading combined with a Major title — a pairing achieved only once in the history of the index.</p>
+    </div>
+    <blockquote>
+      "Saving is not giving up the round — it is an investment in the next one. The beard works the same way. Only those who resist the daily trim reach S-grade on a Major stage." — Lead Analyst, Beard Metrics Lab
+    </blockquote>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    Beard Metrics Lab — Esports Facial Hair Analytics Division · est. 2018
+    <div class="fineprint">Independent fan analytics project. Not affiliated with Jame, Virtus.pro, AVANGAR, or any tournament organizer. For entertainment purposes.</div>
+  </div>
+</footer>
+
+</body>
+</html>
